@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Karta Segregacji Medycznej - PDF Generacja</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    max-width: 850px;
+    margin: 20px auto;
+    padding: 10px;
+    background: #f5f5f5;
+    color: #222;
+  }
+  h1 {
+    text-align: center;
+    margin-bottom: 10px;
+    color: #002663;
+  }
+  label {
+    display: block;
+    font-weight: bold;
+    margin-top: 14px;
+  }
+  input[type=text], input[type=datetime-local], input[type=number], select, textarea {
+    width: 100%;
+    padding: 6px 8px;
+    margin-top: 4px;
+    box-sizing: border-box;
+    border: 1px solid #aaa;
+    border-radius: 3px;
+    font-size: 1em;
+    font-family: Arial, sans-serif;
+    background: white;
+  }
+  textarea {
+    resize: vertical;
+    min-height: 60px;
+  }
+  button {
+    margin-top: 30px;
+    padding: 12px 22px;
+    font-size: 1.1em;
+    font-weight: bold;
+    background-color: #004080;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    transition: background-color 0.3s ease;
+  }
+  button:hover {
+    background-color: #003060;
+  }
+  hr {
+    margin-top: 25px;
+    margin-bottom: 25px;
+    border: 0;
+    height: 1px;
+    background: #ccc;
+  }
+
+<style>
+  #consent-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+  #consent-box {
+    background: #222;
+    padding: 30px;
+    max-width: 500px;
+    border-radius: 10px;
+    text-align: center;
+  }
+  #consent-box button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background: #28a745;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+  }
+</style>
+<script>
+  function acceptConsent() {
+    document.getElementById('consent-overlay').style.display = 'none';
+  }
+</script>
+
+<style>
+  #consent-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+  #consent-box {
+    background: #222;
+    padding: 30px;
+    max-width: 500px;
+    border-radius: 10px;
+    text-align: center;
+  }
+  #consent-box button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background: #28a745;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+  }
+</style>
+<script>
+  function acceptConsent() {
+    document.getElementById('consent-overlay').style.display = 'none';
+  }
+</script>
+
+
+
+
+</style>
+</head>
+<body>
+
+<div id="consent-overlay">
+  <div id="consent-box">
+    <p>Wchodząc na stronę przyjmuję do wiadomości, iż strona internetowa dotyczy tylko odgrywania roli w grze komputerowej i nie ma nic wspólnego z realnym światem.</p>
+    <button onclick="acceptConsent()">Akceptuj</button>
+  </div>
+</div>
+
+
+<h1>KARTA SEGREGACJI MEDYCZNEJ<br>Szpitalnego Oddziału Ratunkowego<br>Strona dotyczy odgrywania roli w grze komputerowej</h1>
+
+<form id="segregacjaForm">
+
+  <label for="priority">Priorytet pacjenta:</label>
+  <select id="priority" name="priority" required>
+    <option value="" disabled selected>Wybierz priorytet</option>
+    <option value="Czerwony">Czerwony</option>
+    <option value="Pomarańczowy">Pomarańczowy</option>
+    <option value="Żółty">Żółty</option>
+    <option value="Zielony">Zielony</option>
+    <option value="Niebieski">Niebieski</option>
+  </select>
+
+  <label for="name">Imię i Nazwisko chorego:</label>
+  <input type="text" id="name" name="name" placeholder="Imię i nazwisko chorego" required autocomplete="off" />
+
+  <label for="pesel">PESEL chorego:</label>
+  <input type="text" id="pesel" name="pesel" maxlength="11" pattern="\d{11}" required autocomplete="off" />
+
+  <label for="datetimeStart">Data i godzina rozpoczęcia segregacji:</label>
+  <input type="datetime-local" id="datetimeStart" name="datetimeStart" required />
+
+  <hr />
+
+  <label for="interviewBy">1. Ustalenia z wywiadu zebrane od:</label>
+  <select id="interviewBy" name="interviewBy">
+    <option value="" disabled selected>Wybierz</option>
+    <option value="Pacjent">Pacjent</option>
+    <option value="Rodzina">Rodzina</option>
+    <option value="ZRM">ZRM</option>
+    <option value="Świadkowie zdarzenia">Świadkowie zdarzenia</option>
+    <option value="Nie możliwy do zebrania">Nie możliwy do zebrania</option>
+  </select>
+
+  <label for="arrivalPlace">2. Pacjent przybył do szpitala:</label>
+  <select id="arrivalPlace" name="arrivalPlace">
+    <option value="" disabled selected>Wybierz</option>
+    <option value="Samodzielnie ze skierowaniem od lekarza specjalisty">Samodzielnie ze skierowaniem od lekarza specjalisty</option>
+    <option value="Samodzielnie ze skierowaniem od lekarza POZ">Samodzielnie ze skierowaniem od lekarza POZ</option>
+    <option value="Samodzielnie bez skierowania">Samodzielnie bez skierowania</option>
+    <option value="Zespołem Ratownictwa Medycznego">Zespołem Ratownictwa Medycznego</option>
+  </select>
+
+  <label for="reason">3. Powód przybycia:</label>
+  <textarea id="reason" name="reason"></textarea>
+
+  <hr />
+
+  <label for="symptomStart">1. Początek objawów:</label>
+  <input type="datetime-local" id="symptomStart" name="symptomStart" />
+
+  <label for="symptomChar">2. Charakterystyka objawów:</label>
+  <textarea id="symptomChar" name="symptomChar"></textarea>
+
+  <label for="currentSymptoms">3. Objawy w chwili badania występują:</label>
+  <select id="currentSymptoms" name="currentSymptoms">
+    <option value="" disabled selected>Wybierz</option>
+    <option value="Tak">Tak</option>
+    <option value="Nie">Nie</option>
+  </select>
+
+  <label for="painScale">4. Skala bólu (0–10):</label>
+  <input type="number" id="painScale" name="painScale" min="0" max="10" step="1" />
+
+  <label for="painRadiation">5. Promieniowanie bólu do:</label>
+  <input type="text" id="painRadiation" name="painRadiation" />
+
+  <label for="painFactors">6. Czynniki modyfikujące ból:</label>
+  <textarea id="painFactors" name="painFactors"></textarea>
+
+  <label for="pastSituations">7. Sytuacje podobne w przeszłości:</label>
+  <select id="pastSituations" name="pastSituations">
+    <option value="" disabled selected>Wybierz</option>
+    <option value="Tak">Tak</option>
+    <option value="Nie">Nie</option>
+  </select>
+
+  <hr />
+
+  <label for="generalState">1. Stan ogólny chorego:</label>
+  <select id="generalState" name="generalState">
+    <option value="" disabled selected>Wybierz</option>
+    <option value="Dobry">Dobry</option>
+    <option value="Średnic">Średnic</option>
+    <option value="Ciężki">Ciężki</option>
+  </select>
+
+  <hr />
+
+  <label for="physicalExamination">1. Ustalenia z badania przedmiotowego:</label>
+  <textarea id="physicalExamination" name="physicalExamination"></textarea>
+
+  <label for="pulse">2. Tętno:</label>
+  <input type="text" id="pulse" name="pulse" />
+
+  <label for="temperature">3. Temperatura:</label>
+  <input type="text" id="temperature" name="temperature" />
+
+  <label for="gcs">4. GCS:</label>
+  <input type="text" id="gcs" name="gcs" />
+
+  <label for="respirationRate">5. Ilość oddechów na min:</label>
+  <input type="text" id="respirationRate" name="respirationRate" />
+
+  <label for="saturation">6. Saturacja:</label>
+  <input type="text" id="saturation" name="saturation" />
+
+  <label for="bloodPressure">7. Ciśnienie tętnicze:</label>
+  <input type="text" id="bloodPressure" name="bloodPressure" />
+
+  <hr />
+
+  <label for="allergies">1. Alergie:</label>
+  <textarea id="allergies" name="allergies"></textarea>
+
+  <label for="medications">2. Przyjmowane leki:</label>
+  <textarea id="medications" name="medications"></textarea>
+
+  <label for="pastIllnesses">3. Przebyte choroby, operacje, urazy:</label>
+  <textarea id="pastIllnesses" name="pastIllnesses"></textarea>
+
+  <label for="lastMeal">5. Ostatni posiłek lub napój:</label>
+  <textarea id="lastMeal" name="lastMeal"></textarea>
+
+  <hr />
+
+  <label for="personConducting">Osoba dokonująca segregacji:</label>
+  <input type="text" id="personConducting" name="personConducting" autocomplete="off" />
+
+  <button type="button" id="downloadPdf">Pobierz jako PDF</button>
+
+</form>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+  const { jsPDF } = window.jspdf;
+
+  document.getElementById("downloadPdf").addEventListener("click", () => {
+    const doc = new jsPDF({ unit: "mm", format: "a4" });
+    const marginLeft = 12;
+    const marginRight = 198;
+    const maxLineWidth = marginRight - marginLeft;
+    const lineHeight = 7;
+    let y = 20;
+
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor("#002663");
+    doc.setFontSize(18);
+    doc.text("KARTA SEGREGACJI MEDYCZNEJ", 105, y, null, null, "center");
+    y += lineHeight + 3;
+    doc.setFontSize(12);
+    doc.text("Szpitalny Oddział Ratunkowy", 105, y, null, null, "center");
+    y += lineHeight + 6;
+
+    doc.setFontSize(9);
+    doc.setTextColor("#333333");
+    doc.setFont("helvetica", "normal");
+    doc.text("Dokument symulowany – nie jest prawdziwą kartą medyczną!", 105, y, null, null, "center");
+    y += lineHeight + 6;
+
+    const form = document.getElementById("segregacjaForm");
+
+    function printLine(label, value, labelBold = true) {
+      if (!value) value = "....................................................................";
+      if (labelBold) {
+        doc.setFont("helvetica", "bold");
+        doc.text(label + ":", marginLeft, y);
+        doc.setFont("helvetica", "normal");
+        y += lineHeight;
+        const lines = doc.splitTextToSize(value, maxLineWidth);
+        for (const line of lines) {
+          if (y > 280) {
+            doc.addPage();
+            y = 20;
+          }
+          doc.text(line, marginLeft + 5, y);
+          y += lineHeight;
+        }
+        y += 4;
+      } else {
+        const line = label + ": " + value;
+        if (y > 280) {
+          doc.addPage();
+          y = 20;
+        }
+        doc.setFont("helvetica", "bold");
+        doc.text(line, marginLeft, y);
+        y += lineHeight + 4;
+      }
+    }
+
+    function printSeparator() {
+      if (y > 280) {
+        doc.addPage();
+        y = 20;
+      }
+      doc.setDrawColor(180);
+      doc.setLineWidth(0.6);
+      doc.line(marginLeft, y, marginRight, y);
+      y += 10;
+      doc.setDrawColor(0);
+      doc.setLineWidth(0.2);
+    }
+
+    function getValue(id) {
+      const el = form.querySelector("#" + id);
+      if (!el) return "";
+      return el.value.trim();
+    }
+
+    printLine("Priorytet pacjenta", getValue("priority"), false);
+    printLine("Imię i Nazwisko chorego", getValue("name"), false);
+    printLine("PESEL chorego", getValue("pesel"), false);
+    printLine("Data i godzina rozpoczęcia segregacji", getValue("datetimeStart"));
+
+    printSeparator();
+
+    printLine("1. Ustalenia z wywiadu zebrane od", getValue("interviewBy"));
+    printLine("2. Pacjent przybył do szpitala", getValue("arrivalPlace"), false);
+    printLine("3. Powód przybycia", getValue("reason"));
+
+    printSeparator();
+
+    printLine("1. Początek objawów", getValue("symptomStart"));
+    printLine("2. Charakterystyka objawów", getValue("symptomChar"));
+    printLine("3. Objawy w chwili badania występują", getValue("currentSymptoms"), false);
+    printLine("4. Skala bólu (0–10)", getValue("painScale"), false);
+    printLine("5. Promieniowanie bólu do", getValue("painRadiation"));
+    printLine("6. Czynniki modyfikujące ból", getValue("painFactors"));
+    printLine("7. Sytuacje podobne w przeszłości", getValue("pastSituations"), false);
+
+    printSeparator();
+
+    printLine("1. Stan ogólny chorego", getValue("generalState"), false);
+
+    printSeparator();
+
+    printLine("1. Ustalenia z badania przedmiotowego", getValue("physicalExamination"));
+    printLine("2. Tętno", getValue("pulse"), false);
+    printLine("3. Temperatura", getValue("temperature"), false);
+    printLine("4. GCS", getValue("gcs"), false);
+    printLine("5. Ilość oddechów na min", getValue("respirationRate"), false);
+    printLine("6. Saturacja", getValue("saturation"), false);
+    printLine("7. Ciśnienie tętnicze", getValue("bloodPressure"), false);
+
+    printSeparator();
+
+    printLine("1. Alergie", getValue("allergies"));
+    printLine("2. Przyjmowane leki", getValue("medications"));
+    printLine("3. Przebyte choroby, operacje, urazy", getValue("pastIllnesses"));
+    printLine("5. Ostatni posiłek lub napój", getValue("lastMeal"));
+
+    y += lineHeight;
+
+    printLine("Osoba dokonująca segregacji", getValue("personConducting"), false);
+
+    // Generowanie nazwy pliku: "Karta Segregacji medyczne (ImieNazwisko).pdf"
+    let fileName = "Karta Segregacji medyczne";
+    const clientName = getValue("name");
+    if (clientName) {
+      fileName += " (" + clientName.replace(/[\\/:"*?<>|]+/g, "") + ")";
+    }
+    fileName += ".pdf";
+
+    doc.save(fileName);
+  });
+</script>
+
+</body>
+</html>
